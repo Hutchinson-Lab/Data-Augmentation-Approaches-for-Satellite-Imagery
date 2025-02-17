@@ -1,0 +1,58 @@
+---
+model:
+  mode: 'classification'  # ['classification', 'regression']
+  task: 'eurosat'
+  name: 'eurosat_resnet_pre_wD0.01_1e-6_3kepochs_batch16_moco' # name of training run/model
+  model_fn: '' # path to .ckpt to resume training a model or for evaluating a trained model
+
+training:
+  lr: 1e-6
+  weight_decay: 0.01
+  beta1: 0.9  # default is 0.9
+  lr_gamma:  # gamma for learning rate scheduler (decay rate factor), if empty: no scheduler
+  epochs_start: 0
+  epochs_end: 3000
+  batch_size: 16
+  shuffle: true
+  augment: true  # true to perform any type of augmentation
+  augment_type: ['Sat-CutMix'] # a list of either color and/or geometric transformations or
+                               # ONE from the satellite-specific, automated, or mixing methods
+    # COLOR: 'auto_contrast', 'equalize', 'color', 'solarize', 'posterize', 'contrast', 'brightness', 'sharpness'
+    # GEOMETRIC: 'identity', 'translateX', 'translateY', 'shearX', 'shearY', 'flip', 'rotate'
+    # SATELLITE-SPECIFIC: 'Sat-Trivial', 'Sat-CutMix', 'Sat-SlideMix'
+    # AUTOMATED METHODS: 'Auto_ImageNet', 'Auto_CIFAR', 'Auto_SVHN', 'Random', 'Trivial'
+    # MIXING METHOD: 'CutMix'
+    # MOCOv2 AUG-PLUS:'MoCo_aug_plus'
+  sat-cutmix_num_pairs: 3
+  sat-cutmix_alpha: 0.3
+  num_workers: 1
+  train: true
+  val: true  # evaluate validation set
+  test: false  # evaluate test set
+  save_models: false  # save model params every 5 epochs
+
+data:
+  img_type: 'sentinel-2'  # ['rgb', 'sentinel-2']
+  img_size: 64  # glcm: 11, ucMerced: 240,
+  img_ext: 'npy'
+  bands: 13  # number of input bands
+  num_classes: 10
+  labels: 'data_aug/labels/euroSAT_labels.npy'
+
+eval:
+  mse: false
+  mae: false
+  r2: false
+  acc: true
+  pr: true
+  model_weights: ''  # name of model for loading weights
+
+# preprocessing code, usually only needed to format images & labels before training
+preprocessing:
+  tif2npy: false  # set to true to convert tif images to npy
+  csv2npy: false  # set to true to convert csv label files to npy
+  calc_channel_means: false
+  calc_channel_means_stdDevs: false
+  split: 'train'  # split to calc means ['all' 'train', 'test', 'val']
+
+
