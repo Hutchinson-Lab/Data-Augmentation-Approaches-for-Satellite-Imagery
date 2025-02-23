@@ -80,7 +80,7 @@ class _BaseMixUpCutMix(Transform):
         return label.roll(1, 0).mul_(1.0 - lam).add_(label.mul(lam))
 
 
-class SatCutMix(_BaseMixUpCutMix):
+class sat_cutMix(_BaseMixUpCutMix):
     def __init__(self, num_classes, alpha, sat_num_pairs, regression):
         super().__init__()
         self.num_classes = num_classes
@@ -182,7 +182,7 @@ class SatCutMix(_BaseMixUpCutMix):
             return inpt
 
 
-class SlideMix(_BaseMixUpCutMix):
+class sat_slideMix(_BaseMixUpCutMix):
     def __init__(self, num_classes, beta, sat_num_pairs, regression):
         super().__init__()
         self.num_classes = num_classes
