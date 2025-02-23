@@ -1,39 +1,46 @@
 # Data-Augmentation-Approaches-for-Satellite-Imagery
-Code and data for Data Augmentation Approaches for Satellite Imagery [Hopkins et al., AAAI 2025]
+Code and data for Data Augmentation Approaches for Satellite Imagery [Hopkins et al., AAAI 2025]. The code in this repository is for implementing the satellite-specific image augmentation strategies (**Sat-CutMix**, **Sat-SlideMix**, and **Sat-Trivial**) presented in the paper. The code can also be used to reproduce the results within the paper.   
 
 
---
-# Sat-Trivial
+# Sat-CutMix & Sat-SlideMix
+Both Sat-CutMix and Sat-SlideMix are inspired by [CutMix](https://arxiv.org/abs/1905.04899). Sat-CutMix is a mixing method in which, for every image in the batch, the batch image is mixed with another image within the batch to produce a mixed image and label. Sat-SlideMix, on the other hand, rolls every image in the batch along its height or width axis and maintains the same label. 
+
+Implementing either method is straightforward and simply requires a call to the method prior to running data through the model, as shown below. See Sat-CutMix.ipynb or Sat-SlideMix.ipynb for working examples.
+
 ```
-import torch
-from torchvision.io import read_image
-import matplotlib.pyplot as plt
+from from src.mixing import sat_cutMix, sat_slideMix
+
+for i, data in enumerate(trainloader, 0):
+        # get the inputs; data is a list of [inputs, labels]
+        inputs, labels = data
+        inputs, labels = sat_cutMix(inputs, labels)  # alternatively, call sat_slideMix(inputs, labels) 
+
+        # zero the parameter gradients
+        optimizer.zero_grad()
+
+        # forward + backward + optimize
+        outputs = net(inputs)
+        loss = criterion(outputs, labels)
+        loss.backward()
+        optimizer.step()
+```
+
+# Sat-Trivial
+Sat-Trivial is an extension to [TrivialAugment](https://arxiv.org/abs/2103.10158) with satellite-specific augmentations. For each image in a batch, Sat-Trivial randomly samples one augmentation and an augmentation magnitude (if applicable). The set of possible augmentations are {flip, rotate, horizontal flip, vertical flip, translate, shear, randomErase, randomSaturate, and Gaussian noise}. 
+
+Implementing Sat-Trivial is as simple as replacing any transformation scheme with a call to the sat_trivial() function, as shown below. See Sat-Trivial.ipynb for a full working example.
+
+```
 from src.augmentation import sat_trivial
 
-# import image
-img = read_image('/content/drive/MyDrive/AAAI25/test_img.png')
-
-# display original image
-plt.imshow(img.permute(1, 2, 0))
-plt.axis('off')  # Turn off axis labels and ticks
-plt.show()
-
-# define augmention type
-augment_type = 'Sat-Trivial'
+img = torch.randint(0, 256, size=(3, H, W), dtype=torch.uint8)
 
 # define augmentation parameters
 img_size = img.shape[1]  # assumes
 bands = img.shape[0]
-means = torch.mean(img/255, dim=(1,2)).numpy()  # means need to be in range 0-1
+means = torch.mean(img/255, dim=(1,2)).numpy()  # means need to be in the range 0-1
 
-<span style="background-color: #FFFF00">HERE</span>
 # perform transformation 
 transform = sat_trivial(img_size, bands, means)
-img_transformed = transform(img)
-
-# display transformed image
-img_transformed = img_transformed + torch.from_numpy(means).unsqueeze(1).unsqueeze(1)
-plt.imshow(img_transformed.permute(1, 2, 0))
-plt.axis('off')  # Turn off axis labels and ticks
-plt.show()
+img = transform(img)
 ```
