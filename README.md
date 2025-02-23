@@ -26,6 +26,7 @@ img_size = img.shape[1]  # assumes
 bands = img.shape[0]
 means = torch.mean(img/255, dim=(1,2)).numpy()  # means need to be in range 0-1
 
+<span style="background-color: #FFFF00">HERE</span>
 # perform transformation 
 transform = sat_trivial(img_size, bands, means)
 img_transformed = transform(img)
