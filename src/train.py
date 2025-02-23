@@ -19,11 +19,11 @@ def train_model(model, cuda, dataloader, optimizer, epoch, criterion, num_classe
     if mixing_method is not None:
         regression = model_type == 'regression'
         if mixing_method == 'CutMix':
-            cutmix = v2.CutMix(num_classes=num_classes)
+            mixer = v2.CutMix(num_classes=num_classes)
         elif mixing_method == 'Sat-CutMix':
-            cutmix = sat_cutMix(num_classes, satcutmix_alpha, sat_num_pairs, regression)
+            mixer = sat_cutMix(num_classes, satcutmix_alpha, sat_num_pairs, regression)
         elif mixing_method == 'Sat-SlideMix':
-            cutmix = sat_slideMix(num_classes, satslidemix_beta, sat_num_pairs, regression)
+            mixer = sat_slideMix(num_classes, satslidemix_beta, sat_num_pairs, regression)
 
     for img, label, _ in dataloader:
         if cuda:
@@ -32,7 +32,7 @@ def train_model(model, cuda, dataloader, optimizer, epoch, criterion, num_classe
 
         if mixing_method is not None:
             label_pre = label
-            img, label = cutmix(img, label_pre)
+            img, label = mixer(img, label_pre)
 
         optimizer.zero_grad()
 
