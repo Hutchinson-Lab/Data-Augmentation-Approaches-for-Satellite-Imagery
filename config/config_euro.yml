@@ -37,7 +37,7 @@ data:
   img_ext: 'npy'
   bands: 13  # number of input bands
   num_classes: 10
-  labels: 'data_aug/labels/euroSAT_labels.npy'
+  labels: 'data_aug/labels/euroSAT_labels.csv'
 
 eval:
   mse: false
@@ -50,7 +50,6 @@ eval:
 # preprocessing code, usually only needed to format images & labels before training
 preprocessing:
   tif2npy: false  # set to true to convert tif images to npy
-  csv2npy: false  # set to true to convert csv label files to npy
   calc_channel_means: false
   calc_channel_means_stdDevs: false
   split: 'train'  # split to calc means ['all' 'train', 'test', 'val']
