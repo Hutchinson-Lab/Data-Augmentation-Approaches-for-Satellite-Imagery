@@ -38,7 +38,7 @@ data:
   img_ext: 'png'
   bands: 3  # number of input bands
   num_classes: 1
-  labels: 'data_aug/labels/elevation_CONTUS_16_640_UAR_100000_0_0.01data.npy' # path to label
+  labels: 'data_aug/labels/elevation_CONTUS_16_640_UAR_100000_0_0.01data.csv' # path to label
 
 eval:
   mse: true
@@ -51,7 +51,6 @@ eval:
 # preprocessing code, usually only needed to format images & labels before training
 preprocessing:
   tif2npy: false  # set to true to convert tif images to npy
-  csv2npy: false  # set to true to convert csv label files to npy
   calc_channel_means: false
   calc_channel_means_stdDevs: false
   split: 'train'  # split to calc means ['all' 'train', 'test', 'val']
