@@ -2,7 +2,7 @@ from time import time
 import torch
 from torchvision.transforms import v2
 from src.datasets import satellite_dataloader
-from src.mixing import SatCutMix, SlideMix
+from src.mixing import sat_cutMix, sat_slideMix
 from time import time
 
 
@@ -21,9 +21,9 @@ def train_model(model, cuda, dataloader, optimizer, epoch, criterion, num_classe
         if mixing_method == 'CutMix':
             cutmix = v2.CutMix(num_classes=num_classes)
         elif mixing_method == 'Sat-CutMix':
-            cutmix = SatCutMix(num_classes, satcutmix_alpha, sat_num_pairs, regression)
+            cutmix = sat_cutMix(num_classes, satcutmix_alpha, sat_num_pairs, regression)
         elif mixing_method == 'Sat-SlideMix':
-            cutmix = SlideMix(num_classes, satslidemix_beta, sat_num_pairs, regression)
+            cutmix = sat_slideMix(num_classes, satslidemix_beta, sat_num_pairs, regression)
 
     for img, label, _ in dataloader:
         if cuda:
