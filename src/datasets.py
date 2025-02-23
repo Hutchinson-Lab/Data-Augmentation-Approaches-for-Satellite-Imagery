@@ -98,10 +98,8 @@ def get_ids_and_labels_from_npy(split, label_fn):
         label_col = 'label_normalized'
     else:
         label_col = 'label'
-    col_fn = os.path.splitext(label_fn)[0] + '_columns.npy'
-    label_df = np.load(label_fn, allow_pickle=True)
-    label_df_cols = np.load(col_fn, allow_pickle=True)
-    label_df = pd.DataFrame(label_df, columns=label_df_cols)
+
+    label_df = pd.read_csv(label_fn)
 
     if split == 'all':
         ids = label_df['id'].tolist()  # convert column to list
