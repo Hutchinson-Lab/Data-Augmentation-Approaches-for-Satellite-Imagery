@@ -86,10 +86,6 @@ if pre['tif2npy']:
 	print('\nConverting tif to npy')
 	tif2npy(paths['tif_dir'], paths['npy_dir'], img_ext, bands)
 
-if pre['csv2npy']:  # Convert label csv to numpy
-	print('\nConverting csv to npy')
-	utils.csv_to_npy(labels_path, paths['home_dir'])
-
 # Calculate dataset means/std devs for preprocessing - do this once before training
 if pre['calc_channel_means'] or pre['calc_channel_means_stdDevs']:
 	split = pre['split']  # which split to calculate means over
