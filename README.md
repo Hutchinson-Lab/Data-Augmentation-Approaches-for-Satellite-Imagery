@@ -1,5 +1,5 @@
 # Data-Augmentation-Approaches-for-Satellite-Imagery
-Code and data for Data Augmentation Approaches for Satellite Imagery [Hopkins et al., AAAI 2025]. The code is for implementing the satellite-specific image augmentation strategies presented in the paper: **Sat-CutMix**, **Sat-SlideMix**, and **Sat-Trivial**. The code can also be used to reproduce the results within the paper.   
+Code for Data Augmentation Approaches for Satellite Imagery [Hopkins et al., AAAI 2025]. The code is for implementing the satellite-specific image augmentation strategies presented in the paper: **Sat-CutMix**, **Sat-SlideMix**, and **Sat-Trivial**. The code can also be used to reproduce the results within the paper.   
 
 
 # Sat-CutMix & Sat-SlideMix
