@@ -10,10 +10,14 @@ Implementing either method is straightforward and simply requires a call to the 
 ```
 from from src.mixing import sat_cutMix, sat_slideMix
 
+# Define either Sat-CutMix or Sat-SlideMix 
+mixer = sat_cutMix(num_classes, satcutmix_alpha, sat_num_pairs, regression)  # set regression to True for regresssion and False for classification
+# mixer = sat_slideMix(num_classes, satslidemix_beta, sat_num_pairs, regression)
+
 for i, data in enumerate(trainloader, 0):
         # get the inputs; data is a list of [inputs, labels]
         inputs, labels = data
-        inputs, labels = sat_cutMix(inputs, labels)  # alternatively, call sat_slideMix(inputs, labels) 
+        inputs, labels = mixer(inputs, labels) 
 
         # zero the parameter gradients
         optimizer.zero_grad()
