@@ -76,6 +76,7 @@ batch_size = training['batch_size']
 shuffle = training['shuffle']
 num_workers = training['num_workers']
 labels_path = data['labels']
+satcutmix_alpha, satslidemix_beta = None, None
 if augment_type[0] == 'Sat-CutMix':
 	satcutmix_alpha = training['sat-cutmix_alpha']
 	sat_num_pairs = training['sat_num_pairs']
