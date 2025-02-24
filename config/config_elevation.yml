@@ -23,7 +23,7 @@ training:
     # AUTOMATED METHODS: 'Auto_ImageNet', 'Auto_CIFAR', 'Auto_SVHN', 'Random', 'Trivial'
     # MIXING METHOD: 'CutMix'
     # MOCOv2 AUG-PLUS:'MoCo_aug_plus'
-  sat_num_pairs: 3  # gamme in paper
+  sat_num_pairs: 3  # gamma in paper
   sat-cutmix_alpha: 0.9
   sat-slidemix_beta: 1.0
   num_workers: 1
