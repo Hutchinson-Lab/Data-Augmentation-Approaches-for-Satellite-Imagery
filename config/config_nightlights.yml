@@ -25,7 +25,7 @@ training:
     # MOCOv2 AUG-PLUS:'MoCo_aug_plus'
   sat_num_pairs: 3  # gamma term in paper
   sat-cutmix_alpha: 0.9
-  sat-slidemix_beta: 1
+  sat-slidemix_beta: 1.0
   num_workers: 1
   train: true
   val: true  # evaluate validation set
