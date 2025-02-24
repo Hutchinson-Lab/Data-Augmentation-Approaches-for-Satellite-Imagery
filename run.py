@@ -77,6 +77,7 @@ shuffle = training['shuffle']
 num_workers = training['num_workers']
 labels_path = data['labels']
 satcutmix_alpha = training['sat-cutmix_alpha']
+satslidemix_beta = training['sat-slidemix_beta']
 satcutmix_num_pairs = training['sat-cutmix_num_pairs']
 
 
@@ -229,7 +230,10 @@ if training['train']:
 
 			avg_loss_train = train_model(CNN, cuda, train_dataloader, optimizer,
 										 epoch, criterion, data['num_classes'], config['model']['mode'],
-										 print_every, mixing_method, satcutmix_alpha, satcutmix_num_pairs)
+										 print_every, mixing_method=mixing_method,
+										 satcutmix_alpha=satcutmix_alpha,
+										 satslidemix_beta=satslidemix_beta,
+										 sat_num_pairs=satcutmix_num_pairs)
 			train_loss.append(avg_loss_train)
 			writer.add_scalar('loss/train', avg_loss_train, epoch)
 
