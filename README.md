@@ -6,7 +6,7 @@ Deep learning models commonly benefit from data augmentation techniques to diver
 
 
 # Sat-CutMix & Sat-SlideMix
-Sat-CutMix is a an extension to the mixing method [CutMix](https://arxiv.org/abs/1905.04899). The main modifications we made to CutMix are 1) to work in the regression setting and 2) for every image in the batch, the batch image is mixed with a variable number (gamma) of images. Rather than mixing an image with other images in the batch, Sat-SlideMix rolls each image in the batch along its height or width axis a variable number (gamma) of times. 
+Sat-CutMix is an extension to the mixing method [CutMix](https://arxiv.org/abs/1905.04899). The main modifications we made to CutMix are 1) to work in the regression setting and 2) for every image in the batch, the batch image is mixed with a variable number (gamma) of images. Rather than mixing an image with other images in the batch, Sat-SlideMix rolls each image in the batch along its height or width axis a variable number (gamma) of times. 
 
 Implementing either method is straightforward and simply requires a call to either of the methods prior to running data through the model, as shown below. See [Mixers.ipynb](Mixers.ipynb) for working examples.
 
