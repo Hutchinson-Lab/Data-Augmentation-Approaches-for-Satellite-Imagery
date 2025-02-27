@@ -5,28 +5,18 @@ Code for Data Augmentation Approaches for Satellite Imagery [Hopkins et al., AAA
 # Sat-CutMix & Sat-SlideMix
 Both Sat-CutMix and Sat-SlideMix are inspired by [CutMix](https://arxiv.org/abs/1905.04899). Sat-CutMix is a mixing method in which, for every image in the batch, the batch image is mixed with another image within the batch to produce a mixed image and label. Sat-SlideMix, on the other hand, rolls every image in the batch along its height or width axis and maintains the same label. 
 
-Implementing either method is straightforward and simply requires a call to the method prior to running data through the model, as shown below. See Sat-CutMix.ipynb or Sat-SlideMix.ipynb for working examples.
+Implementing either method is straightforward and simply requires a call to either of the methods prior to running data through the model, as shown below. See [Mixers.ipynb](Mixers.ipynb) for working examples.
 
 ```
 from from src.mixing import sat_cutMix, sat_slideMix
 
-# Define either Sat-CutMix or Sat-SlideMix 
-mixer = sat_cutMix(num_classes, satcutmix_alpha, sat_num_pairs, regression)  # set regression to True for regresssion and False for classification
+# Instantiate either Sat-CutMix or Sat-SlideMix
+mixer = sat_cutMix(num_classes, satcutmix_alpha, sat_num_pairs, regression)  
 # mixer = sat_slideMix(num_classes, satslidemix_beta, sat_num_pairs, regression)
 
-for i, data in enumerate(trainloader, 0):
-        # get the inputs; data is a list of [inputs, labels]
-        inputs, labels = data
-        inputs, labels = mixer(inputs, labels) 
-
-        # zero the parameter gradients
-        optimizer.zero_grad()
-
-        # forward + backward + optimize
-        outputs = net(inputs)
-        loss = criterion(outputs, labels)
-        loss.backward()
-        optimizer.step()
+for imgs, labels in dataloader:
+        mixed_imgs, mixed_labels = mixer(imgs, labels) 
+        outputs = net(mixed_imgs)
 ```
 
 # Sat-Trivial
