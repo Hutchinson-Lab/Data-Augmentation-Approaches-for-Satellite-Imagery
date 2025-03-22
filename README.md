@@ -32,7 +32,7 @@ for imgs, labels in dataloader:
 # Sat-Trivial
 Sat-Trivial is an extension to [TrivialAugment](https://arxiv.org/abs/2103.10158) with satellite-specific augmentations. For each image in a batch, Sat-Trivial randomly samples one augmentation and an augmentation magnitude (if applicable). The set of possible augmentations are {identity, flip, rotate, horizontal flip, vertical flip, translate, shear, randomErase, randomSaturate, and Gaussian noise}. Below is a sample batch of images in which the transformations selected for each image are shear, random satruate, random erase, Gaussian noise, and flip.    
 
-![Model](Sat-Trivial.png)
+
 
 Implementing Sat-Trivial is as simple as replacing any transformation scheme with a call to the sat_trivial() function, as shown below. See [Sat-Trivial.ipynb](SatTrivial.ipynb) for a full working example.
 
