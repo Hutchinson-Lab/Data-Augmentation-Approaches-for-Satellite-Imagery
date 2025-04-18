@@ -57,7 +57,11 @@ img = transform(img/255)
 @inproceedings{hopkins2025data,
   title={Data Augmentation Approaches for Satellite Imagery},
   author={Hopkins, Laurel M. and Wong, Weng-Keen and Kerner, Hannah and Li, Fuxin and Hutchinson, Rebecca A},
-  book title={Proceedings of the AAAI Conference on Artificial Intelligence},
-  year={2025}
+  journal={Proceedings of the AAAI Conference on Artificial Intelligence},
+  volume={39}, 
+  number={27},
+  pages={28097-28105},
+  year={2025},
+  DOI={https://doi.org/10.1609/aaai.v39i27.35028}
 }
 ````
