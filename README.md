@@ -51,6 +51,11 @@ transform = sat_trivial(img_size, bands, means)
 img = transform(img/255)
 ```
 
+## Instructions
+Use the config files to specify run parameters and paths.py to specify the associated data directories. Example config files can be found in the config directory. The supplement lists the configurations that were used to achieve the results in the paper. 
+
+To train a model use: ```python run.py --c <path_to_config_file>```
+
 ## Citation
 
 ```
