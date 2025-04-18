@@ -36,6 +36,21 @@ Sat-Trivial is an extension to [TrivialAugment](https://arxiv.org/abs/2103.10158
 
 Implementing Sat-Trivial is as simple as replacing any transformation scheme with a call to the sat_trivial() function, as shown below. See [Sat-Trivial.ipynb](SatTrivial.ipynb) for a full working example.
 
+```
+from src.augmentation import sat_trivial
+
+img = torch.randint(0, 256, size=(3, H, W), dtype=torch.uint8)
+
+# define augmentation parameters
+img_size = img.shape[1]  # assumes square images
+bands = img.shape[0]
+means = torch.mean(img/255, dim=(1,2)).numpy()  # means need to be in the range 0-1
+
+# perform transformation 
+transform = sat_trivial(img_size, bands, means)
+img = transform(img)
+```
+
 ## Citation
 
 ```
