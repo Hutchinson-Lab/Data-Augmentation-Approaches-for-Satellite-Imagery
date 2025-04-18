@@ -48,7 +48,7 @@ means = torch.mean(img/255, dim=(1,2)).numpy()  # means need to be in the range 
 
 # perform transformation 
 transform = sat_trivial(img_size, bands, means)
-img = transform(img)
+img = transform(img/255)
 ```
 
 ## Citation
