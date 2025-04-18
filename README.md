@@ -10,7 +10,7 @@ Sat-CutMix is an extension to the mixing method [CutMix](https://arxiv.org/abs/1
 
 Sat-SlideMix is a mixing method which maintains the original image label (unlike Sat-CutMix). Rather than mixing an image with other images in the batch (i.e. Sat-CutMix), Sat-SlideMix rolls each image in the batch along its height or width axis a variable number (gamma) of times. 
 
-![Model](Sat-CutMix_SlideMix.png)
+![Model](http://Hutchinson-Lab.github.io/files/Sat-CutMix_SlideMix.png)
 
 Implementing either method is straightforward and simply requires a call to either of the methods prior to running data through the model, as shown below. See [Mixers.ipynb](Mixers.ipynb) for working examples.
 
@@ -32,7 +32,7 @@ for imgs, labels in dataloader:
 # Sat-Trivial
 Sat-Trivial is an extension to [TrivialAugment](https://arxiv.org/abs/2103.10158) with satellite-specific augmentations. For each image in a batch, Sat-Trivial randomly samples one augmentation and an augmentation magnitude (if applicable). The set of possible augmentations are {identity, flip, rotate, horizontal flip, vertical flip, translate, shear, randomErase, randomSaturate, and Gaussian noise}. Below is a sample batch of images in which the randomly sampled transformations are shear, random satruate, random erase, Gaussian noise, and flip.    
 
-![Model](Sat-Trivial.png)
+![Model](http://Hutchinson-Lab.github.io/files/Sat-Trivial.png)
 
 Implementing Sat-Trivial is as simple as replacing any transformation scheme with a call to the sat_trivial() function, as shown below. See [Sat-Trivial.ipynb](SatTrivial.ipynb) for a full working example.
 
