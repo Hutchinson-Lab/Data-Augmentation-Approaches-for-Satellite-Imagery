@@ -61,7 +61,7 @@ To train a model use: ```python run.py --c <path_to_config_file>```
 ```
 @inproceedings{hopkins2025data,
   title={Data Augmentation Approaches for Satellite Imagery},
-  author={Hopkins, Laurel M. and Wong, Weng-Keen and Kerner, Hannah and Li, Fuxin and Hutchinson, Rebecca A},
+  author={Hopkins, L.M. and Wong, W. and Kerner, H. and Li, F. and Hutchinson, R.A.},
   journal={Proceedings of the AAAI Conference on Artificial Intelligence},
   volume={39}, 
   number={27},
