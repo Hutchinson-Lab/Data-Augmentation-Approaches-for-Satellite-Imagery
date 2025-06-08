@@ -90,7 +90,7 @@ class sat_cutMix(_BaseMixUpCutMix):
 
     def _get_params(self, flat_inputs: List[Any], batch_size) -> Dict[str, Any]:
 
-        lam = float(np.random.uniform(low=self.alpha, high=1))
+        lam = float(np.random.uniform(low=self.alpha, high=0.75))
 
         H, W = query_size(flat_inputs)
 
@@ -133,29 +133,21 @@ class sat_cutMix(_BaseMixUpCutMix):
         # returned: [0, 0.87, 0, 0, 0, 0.13]
 
         if inpt is params["labels"]:
+            label_mixed = torch.tensor([]).cuda()
             for i in range(self.num_pairs):
                 lam = torch.tensor(params["lam_adjusted"][i]).cuda()
-                if i == 0:
-                    if self.regression:
-                        label_mixed = inpt * lam + inpt.roll(1) * (1.0 - lam)
-                    else:
-                        label = one_hot(inpt,
-                                        num_classes=self.num_classes)  # one hot encoding of original label: [batch_size, num_classes]
-                        if not label.dtype.is_floating_point:
-                            label = label.float()
-                        label_mixed = torch.stack([y * a + y.roll(1, 0) * (1.0 - a) for y, a in zip(label, lam)])
+                if self.regression:
+                    single = inpt * lam + inpt.roll(i+1) * (1.0 - lam)
+                    label_mixed = torch.cat((label_mixed, single), 0)
                 else:
-                    if self.regression:
-                        single = inpt * lam + inpt.roll(i + 1) * (1.0 - lam)
-                        label_mixed = torch.cat((label_mixed, single), 0)
-                    else:
-                        label = one_hot(inpt,
-                                        num_classes=self.num_classes)  # one hot encoding of original label: [batch_size, num_classes]
-                        if not label.dtype.is_floating_point:
-                            label = label.float()
-                        single = torch.stack([y * a + y.roll(i + 1, 0) * (1.0 - a) for y, a in zip(label, lam)])
-                        label_mixed = torch.cat((label_mixed, single), 0)
-
+                    label = one_hot(inpt, num_classes=self.num_classes)  
+                    inpt_rolled = inpt.roll(i+1,0)
+                    label_rolled = one_hot(inpt_rolled, num_classes=self.num_classes)
+                    if not label.dtype.is_floating_point:
+                        label = label.float()
+                        label_rolled = label_rolled.float()
+                    single = torch.stack([y * a + z * (1.0 - a) for y, z, a in zip(label, label_rolled, lam)])
+                    label_mixed = torch.cat((label_mixed, single), 0)
             return label_mixed  # torch tensor w/ shape[num_pairs * batch]
 
         elif isinstance(inpt, (tv_tensors.Image, tv_tensors.Video)) or is_pure_tensor(inpt):
@@ -177,6 +169,11 @@ class sat_cutMix(_BaseMixUpCutMix):
 
                     if isinstance(inpt, (tv_tensors.Image, tv_tensors.Video)):
                         output = tv_tensors.wrap(output, like=inpt)
+            from torchvision.utils import save_image
+            i = 0
+            for img in output:
+                save_image(img, 'output_' + str(i) +'.png')
+                i += 1
             return output
         else:
             return inpt
