@@ -14,6 +14,7 @@ training:
   epochs_end: 3000
   batch_size: 16
   shuffle: true
+  num_workers: 2
   augment: true  # true to perform any type of augmentation
   augment_type: ['Sat-CutMix'] # a list of either color and/or geometric transformations or
                                # ONE from the satellite-specific, automated, or mixing methods
@@ -34,10 +35,10 @@ training:
 data:
   img_type: 'sentinel-2'  # ['rgb', 'sentinel-2']
   img_size: 64  # glcm: 11, ucMerced: 240,
-  img_ext: 'npy'
-  bands: 13  # number of input bands
+  img_ext: 'jpg'
+  bands: 3  # number of input bands -- used 13 in the paper, the example images are the 3 band images 
   num_classes: 10
-  labels: 'data_aug/labels/euroSAT_labels.csv'
+  labels: '/labels/euroSAT_labels_mini.csv'
 
 eval:
   mse: false
