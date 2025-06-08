@@ -1,6 +1,0 @@
-﻿id,class,label,fold,correlation,cv_foldID
-AnnualCrop_13,annualCrop,0,train,FALSE,2
-Residential_40,residential,7,train,FALSE,1
-Industrial_27,industrial,4,train,FALSE,3
-River_2,river,8,train,FALSE,3
-Forest_100,forest,1,train,FALSE,2
